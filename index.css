@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+
+
+.imagens {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: rgb(5, 5, 5);
+    padding: 10px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 200px;
+    height: 250px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Box shadow com 30% de opacidade */
+    
+}
+
+.circulo {
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border-radius: 100px;
+}
+
+.nome {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 15px;
+    color: darkslategrey;
+    font-weight: bold;
+    margin: 10px;
+}
+
+@media (max-width: 600px) {
+    .card {
+        width: 150px;
+        height: 200px;
+    }
+
+    .circulo {
+        width: 80px;
+        height: 80px;
+    }
+
+    .nome {
+        font-size: 12px;
+    }
+}
+
+/* Cores aleatórias para os cards */
+.card.cor1 {
+    background-color: #FFCCCB; /* Rosa claro */
+}
+
+.card.cor2 {
+    background-color: #87CEEB; /* Azul claro */
+}
+
+.card.cor3 {
+    background-color: #90EE90; /* Verde claro */
+}
+
+.card.cor4 {
+    background-color: #FFD700; /* Amarelo */
+}
+
+.card.cor5 {
+    background-color: #FFA07A; /* Salmão claro */
+}
+
+.card.cor6 {
+    background-color: #a56968; /* Rosa claro */
+}
+
+.card.cor7 {
+    background-color: #256985; /* Azul claro */
+}
+
+.card.cor8 {
+    background-color: #04fa04; /* Verde claro */
+}
+
+.card.cor9 {
+    background-color: #8a791d; /* Amarelo */
+}
+
+.card.cor10 {
+    background-color: #cc3c03; /* Salmão claro */
+}
+
+
+/* Estilos para os botões de paginação com cores mais vivas */
+button {
+    background-color: #FF6B6B; /* Cor de fundo mais viva */
+    color: #fff; /* Cor do texto */
+    border: none; /* Sem borda */
+    padding: 10px 20px; /* Espaçamento interno */
+    border-radius: 5px; /* Borda arredondada */
+    cursor: pointer; /* Cursor ao passar por cima */
+    transition: background-color 0.3s ease; /* Transição suave */
+    margin: 10px; /* Margem externa */
+}
+
+button:hover {
+    background-color: #FF4848; /* Cor mais clara ao passar o mouse */
+}
+
+
+

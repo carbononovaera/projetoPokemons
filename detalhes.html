@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="card.css">
+    <title>Detalhes do Pokémon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .detalhes {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            background-color: #FFCCBC; /* Cor de fundo suave */
+            color: #333; /* Cor do texto padrão */
+        }
+        .detalhes-dark {
+            background-color: #212121; /* Cor de fundo escura */
+            color: #FFF; /* Texto branco */
+        }
+        .imagem {
+            text-align: center;
+        }
+        .imagem img {
+            max-width: 200px;
+            border-radius: 50%;
+        }
+        .info {
+            margin-top: 20px;
+        }
+        .info p {
+            margin-bottom: 10px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .info strong {
+            font-weight: bold;
+        }
+        .btn-voltar {
+            margin-top: 20px;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-voltar-light {
+            background-color: #81C784; /* Verde mais suave */
+            color: white;
+        }
+        .btn-voltar-dark {
+            background-color: #4CAF50; /* Verde mais escuro */
+            color: white;
+        }
+        .btn-voltar-light:hover {
+            background-color: #4CAF50; /* Verde mais escuro ao passar o mouse */
+        }
+        .btn-voltar-dark:hover {
+            background-color: #45a049; /* Verde mais escuro ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="detalhes" id="detalhes-pokemon">
+        <div class="imagem">
+            <img src="" alt="Imagem do Pokémon" id="pokemon-img">
+        </div>
+        <div class="info">
+            <p><strong>Nome:</strong> <span id="pokemon-nome"></span></p>
+            <p><strong>ID:</strong> <span id="pokemon-id"></span></p>
+            <p><strong>Habilidades:</strong> <span id="pokemon-habilidades"></span></p>
+        </div>
+
+        <!-- Botão de voltar para a página inicial -->
+        <button class="btn-voltar" id="btn-voltar" onclick="voltarParaPaginaInicial()">Voltar para a página inicial</button>
+    </div>
+
+    <script>
+        // Função para gerar uma cor de fundo aleatória
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Aplica a cor de fundo aleatória à div .detalhes
+        const detalhesPokemon = document.getElementById('detalhes-pokemon');
+        detalhesPokemon.style.backgroundColor = getRandomColor();
+
+        // Verifica o contraste da cor de fundo e aplica o esquema de cores de texto apropriado
+        function aplicarEsquemaDeCores() {
+            const backgroundColor = window.getComputedStyle(detalhesPokemon).backgroundColor;
+            const rgb = backgroundColor.match(/\d+/g);
+            if (rgb) {
+                const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+                if (brightness >= 128) {
+                    detalhesPokemon.classList.remove('detalhes-dark');
+                    document.getElementById('btn-voltar').classList.remove('btn-voltar-dark');
+                    document.getElementById('btn-voltar').classList.add('btn-voltar-light');
+                } else {
+                    detalhesPokemon.classList.add('detalhes-dark');
+                    document.getElementById('btn-voltar').classList.remove('btn-voltar-light');
+                    document.getElementById('btn-voltar').classList.add('btn-voltar-dark');
+                }
+            }
+        }
+
+        // Chama a função para aplicar o esquema de cores ao carregar a página
+        aplicarEsquemaDeCores();
+
+        // Extrai o ID do Pokémon da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const pokemonId = urlParams.get('id');
+
+        // Função para buscar e exibir detalhes do Pokémon
+        async function fetchPokemonDetails(id) {
+            try {
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+                if (!response.ok) {
+                    throw new Error('Falha na requisição');
+                }
+                const data = await response.json();
+                displayPokemonDetails(data);
+            } catch (error) {
+                console.error('Erro ao buscar Pokémon:', error);
+            }
+        }
+
+        // Função para exibir detalhes do Pokémon na página
+        function displayPokemonDetails(pokemon) {
+            document.getElementById('pokemon-img').src = pokemon.sprites.front_default;
+            document.getElementById('pokemon-nome').textContent = pokemon.name;
+            document.getElementById('pokemon-id').textContent = pokemon.id;
+            document.getElementById('pokemon-habilidades').textContent = pokemon.abilities.map(ability => ability.ability.name).join(', ');
+        }
+
+        // Função para voltar para a página inicial
+        function voltarParaPaginaInicial() {
+            window.location.href = 'index.html'; // Redireciona para a página inicial
+        }
+
+        // Carrega os detalhes do Pokémon ao carregar a página
+        fetchPokemonDetails(pokemonId);
+    </script>
+</body>
+</html>
